@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<!--  -->
+<mapper namespace="kofa.kofacollectionlist">
+
+	<resultMap id="kofacollectionlistResultMap" type="kofacollectionlist">
+		<id property="cCollectionId" column="C_COLLECTION_ID" />
+		<result property="cCollectionTitle" column="C_COLLECTION_TITLE" />
+		<result property="cCollectionKeyWord" column="C_COLLECTION_KEYWORD" />
+		<result property="cHighlightCd" column="C_HIGHLIGHT_CD" />
+		<result property="cCollectionOrder" column="C_COLLECTION_ORDER" />
+		<result property="cViewCnt" column="C_VIEW_CNT" />
+		<result property="cStatusCd" column="C_STATUS_CD" />
+		<result property="cRegisterId" column="C_REGISTER_ID" />
+		<result property="cRegistDateTime" column="C_REGIST_DATETIME" />
+		<result property="cUpdaterId" column="C_UPDATER_ID" />
+		<result property="cUpdateDateTime" column="C_UPDATE_TIME" />
+		<result property="useYn" column="USE_YN" />
+		<result property="cCollectionInfo" column="C_COLLECTION_INFO" />
+		
+
+		
+		<result property="cEnglishCollectionListTitle" column="C_ENGLISH_COLLECTIONLIST_TITLE" />
+		<result property="cCollectionListSubTitle" column="C_COLLECTIONLIST_SUB_TITLE" />
+		<result property="cEnglishCollectionSubTitle" column="C_ENGLISH_COLLECTION_SUB_TITLE" />
+		<result property="cCollectionKofaGroupId" column="C_COLLECTION_KOFA_GROUP_ID" />
+		<result property="cCollectionDesc" column="C_COLLECTION_DESC" />
+		<result property="cCollectionUseCondition" column="C_COLLECTION_USE_CONDITION" />
+		<result property="cCollectionKofaGroupTitle" column="C_COLLECTION_KOFA_GROUP_TITLE" />
+		<result property="cCollectionKofaGroupImg" column="C_COLLECTION_KOFA_GROUP_IMG" />
+		<result property="cCollectionKofaGroupDesc" column="C_COLLECTION_KOFA_GROUP_DESC" />
+		<result property="cCollectionKofaGroupOrder" column="C_COLLECTION_KOFA_GROUP_ORDER" />
+		<result property="cCollectionContent" column="C_COLLECTION_CONTENT" />
+	</resultMap>
+
+	<select id="getuseYnFlag" resultMap="kofacollectionlistResultMap">
+	
+	    SELECT distinct  USE_YN FROM TB_COLLECTION_INFO
+	</select>
+	<select id="getAllKofaCollectionGroup" resultMap="kofacollectionlistResultMap">
+	SELECT C_COLLECTION_KOFA_GROUP_TITLE FROM TB_COLLECTION_KOFA
+	
+	</select>
+	
+	 
+	
+	<select id="getCollectionListInfo" resultMap="kofacollectionlistResultMap" parameterType="string">
+		SELECT T2.* FROM (
+			SELECT ROWNUM ROWNO, T1.* 
+			FROM ( SELECT
+		  	tci.C_COLLECTION_TITLE AS cCollectionTitle ,
+		  	tci.C_COLLECTION_INFO AS cCollectionInfo,
+		  	tci.C_COLLECTION_DESC AS cCollectionDesc,
+		    tci.C_COLLECTION_ID AS cCollectionId  ,
+		    tci.C_COLLECTION_USE_CONDITION AS cCollectionUseCondition,
+		    tck.C_COLLECTION_KOFA_GROUP_TITLE AS cCollectionKofaGroupTitle ,
+		    tck.C_COLLECTION_KOFA_GROUP_IMG AS cCollectionKofaGroupImg ,
+		    tci.USE_YN AS useYn 
+		  
+		  
+		FROM
+		    TB_COLLECTION_INFO tci LEFT OUTER JOIN TB_COLLECTION_KOFA tck ON tci.C_COLLECTION_KOFA_GROUP_ID = tck.C_COLLECTION_KOFA_GROUP_ID
+	 
+		 
+		WHERE 1 = 1
+		
+		 AND C_COLLECTION_ID = #{collectionListId,jdbcType=VARCHAR}
+			ORDER BY 
+				 C_COLLECTION_ID 
+				 
+				 DESC 
+				 
+				, C_COLLECTION_ID DESC
+			) T1
+			
+		) T2
+		
+	</select>
+	
+	<select id="getKofaCollectionPagingList" resultMap="kofacollectionlistResultMap" parameterType="java.util.HashMap">
+		SELECT T2.* FROM (
+			SELECT ROWNUM ROWNO, T1.* 
+			FROM ( SELECT
+			tf.C_COLLECTION_KOFA_GROUP_TITLE AS cCollectionKofaGroupTitle,
+			ti.C_COLLECTION_ID AS cCollectionId,
+			ti.C_COLLECTION_TITLE AS cCollectionTitle,
+			TO_CHAR(ti.C_UPDATE_TIME, 'YYYY-MM-DD') AS cUpdateDateTime,
+			ti.USE_YN AS useYn 
+			
+		FROM
+		    TB_COLLECTION_INFO ti LEFT OUTER JOIN TB_COLLECTION_KOFA tf ON ti.C_COLLECTION_KOFA_GROUP_ID = tf.C_COLLECTION_KOFA_GROUP_ID
+		 
+        	WHERE 1 = 1
+		  <if test='kofaCollectionListTitle != null and kofaCollectionListTitle != ""'>
+			AND UPPER(C_COLLECTION_TITLE) LIKE '%' || UPPER(#{kofaCollectionListTitle,jdbcType=VARCHAR}) || '%'
+		</if>
+		 <if test='kofaUseYn != null and kofaUseYn != ""'>
+			AND ti.USE_YN = #{kofaUseYn,jdbcType=VARCHAR}
+		</if>
+		
+		 <if test='KofaGroupTitle != null and KofaGroupTitle != ""'>
+			 AND tf.C_COLLECTION_KOFA_GROUP_TITLE = #{KofaGroupTitle,jdbcType=VARCHAR}
+		</if>
+			ORDER BY 
+				 ti.C_COLLECTION_ID 
+				 
+				 DESC 
+				 
+				 
+				, ti.C_COLLECTION_ID desc
+			) T1
+          WHERE ROWNUM &lt;= #{fetchSize}
+        ) T2
+      WHERE ROWNO &gt;= #{startRow}
+	
+	 </select>
+	 <select id="kofaCollectionListCount" resultType="int" parameterType="java.util.HashMap">
+		SELECT COUNT(*)  FROM (
+			 SELECT
+			tf.C_COLLECTION_KOFA_GROUP_TITLE AS cCollectionKofaGroupTitle,
+			ti.C_COLLECTION_ID AS cCollectionId,
+			ti.C_COLLECTION_TITLE AS cCollectionTitle,
+			TO_CHAR(ti.C_UPDATE_TIME, 'YYYY-MM-DD') AS cUpdateDateTime,
+			ti.USE_YN AS useYn 
+			
+		FROM
+		    TB_COLLECTION_INFO ti LEFT OUTER JOIN TB_COLLECTION_KOFA tf ON ti.C_COLLECTION_KOFA_GROUP_ID = tf.C_COLLECTION_KOFA_GROUP_ID
+		 
+        	WHERE 1 = 1
+		   <if test='kofaCollectionListTitle != null and kofaCollectionListTitle != ""'>
+		  AND UPPER(ti.C_COLLECTION_TITLE) LIKE '%' || UPPER(#{kofaCollectionListTitle,jdbcType=VARCHAR}) || '%'
+		   </if>
+        	<if test='kofaUseYn != null and kofaUseYn != ""'>
+			AND ti.USE_YN = #{kofaUseYn,jdbcType=VARCHAR}
+			</if>
+			<if test='KofaGroupTitle != null and KofaGroupTitle != ""'>
+		   AND tf.C_COLLECTION_KOFA_GROUP_TITLE =#{KofaGroupTitle,jdbcType=VARCHAR}
+		   </if>
+			ORDER BY 
+				 ti.C_COLLECTION_ID 
+				 
+				 DESC 
+				 
+				 
+				, ti.C_COLLECTION_ID DESC
+			
+        ) 
+	</select>
+</mapper>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+	<settings>
+		<setting name="callSettersOnNulls" value="true"/>
+		<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings>
+    <typeAliases>
+		<typeAlias alias="egovMap" type="egovframework.rte.psl.dataaccess.util.EgovMap"/>
+
+		<typeAlias alias="adminAuth" type="egovframework.ag.homepage.admin.auth.service.AdminAuthVO"/>
+		<typeAlias alias="adminLogin" type="egovframework.ag.homepage.admin.manager.service.AdminLoginVO"/>
+		<typeAlias alias="adminManager" type="egovframework.ag.homepage.admin.manager.service.AdminManagerVO"/>
+		<typeAlias alias="adminMenu" type="egovframework.ag.homepage.admin.menu.service.AdminMenuVO"/>
+		<typeAlias alias="adminMenuAuth" type="egovframework.ag.homepage.admin.menu.service.AdminMenuAuthVO"/>
+		<typeAlias alias="adminPass" type="egovframework.ag.homepage.admin.manager.service.AdminPassVO"/>
+		<typeAlias alias="adminRecordAuth" type="egovframework.ag.homepage.admin.manager.service.AdminRecordAuthVO"/>
+		<typeAlias alias="adminRecordWork" type="egovframework.ag.homepage.admin.manager.service.AdminRecordWorkVO"/>
+		<typeAlias alias="adminStatic" type="egovframework.ag.homepage.admin.statistics.service.AdminStaticVO"/>
+
+		<typeAlias alias="attachFile" type="egovframework.ag.homepage.common.attach.service.AttachFileVO" />
+		<typeAlias alias="bannerManage" type="egovframework.ag.homepage.common.banner.service.BannerManageVO" />
+		<typeAlias alias="codeGroup" type="egovframework.ag.homepage.common.code.service.CodeGroupVO" />
+		<typeAlias alias="codeSub" type="egovframework.ag.homepage.common.code.service.CodeSubVO" />
+		<typeAlias alias="pageBody" type="egovframework.ag.homepage.common.page.service.PageBodyVO" />
+		<typeAlias alias="pageCode" type="egovframework.ag.homepage.common.page.service.PageCodeVO" />
+		<typeAlias alias="pageMenu" type="egovframework.ag.homepage.common.page.service.PageMenuVO" />
+		<typeAlias alias="termsManage" type="egovframework.ag.homepage.common.terms.service.TermsManageVO" />
+
+		<!-- Service -->
+		<typeAlias alias="donorManage" type="egovframework.ag.homepage.service.donor.service.DonorManageVO" />
+		<typeAlias alias="entrustUserInfo" type="egovframework.ag.homepage.service.entrust.service.EntrustUserInfoVO" />
+		<typeAlias alias="entrustData" type="egovframework.ag.homepage.service.entrust.service.EntrustDataVO" />
+		<typeAlias alias="movieroomReservationVO" type="egovframework.ag.homepage.service.movieroom.service.MovieroomReservationVO" />
+
+		<!-- Kofa -->
+		<typeAlias alias="informationOpen" type="egovframework.ag.homepage.kofa.open.service.InformationOpenVO" />
+		<typeAlias alias="informationOpenLink" type="egovframework.ag.homepage.kofa.open.service.InformationOpenLinkVO" />
+		<typeAlias alias="organizationPart" type="egovframework.ag.homepage.kofa.organization.service.OrganizationPartVO" />
+		<typeAlias alias="organizationMember" type="egovframework.ag.homepage.kofa.organization.service.OrganizationMemberVO" />
+		<typeAlias alias="archiveDataStatus" type="egovframework.ag.homepage.kofa.status.service.ArchiveDataStatusVO" />
+		<typeAlias alias="retentionDataStatus" type="egovframework.ag.homepage.kofa.status.service.RetentionDataStatusVO" />
+		<typeAlias alias="webzineArticle" type="egovframework.ag.homepage.kofa.webzine.service.WebzineArticleVO" />
+		<typeAlias alias="webzineUpSection" type="egovframework.ag.homepage.kofa.webzine.service.WebzineUpSectionVO" />
+		<typeAlias alias="webzineDownSection" type="egovframework.ag.homepage.kofa.webzine.service.WebzineDownSectionVO" />
+		<typeAlias alias="webzineWriter" type="egovframework.ag.homepage.kofa.webzine.service.WebzineWriterVO" />
+		<typeAlias alias="webzineCover" type="egovframework.ag.homepage.kofa.webzine.service.WebzineCoverVO" />
+		<typeAlias alias="webzineArticleComment" type="egovframework.ag.homepage.kofa.webzine.service.WebzineArticleCommentVO" />
+
+		<!-- Meseum -->
+		<typeAlias alias="theaterBody" type="egovframework.ag.homepage.museum.theater.service.TheaterBodyVO" />
+		<typeAlias alias="theaterInfo" type="egovframework.ag.homepage.museum.theater.service.TheaterInfoVO" />
+		<typeAlias alias="bookingGroup" type="egovframework.ag.homepage.museum.booking.service.BookingGroupVO" />
+		<typeAlias alias="bookingGroupCalendarVO" type="egovframework.ag.homepage.museum.booking.service.BookingGroupCalendarVO" />
+		<typeAlias alias="bookingGroupScheduleVO" type="egovframework.ag.homepage.museum.booking.service.BookingGroupScheduleVO" />
+
+		<!-- Trivia -->
+		<typeAlias alias="koreanFilm" type="egovframework.ag.homepage.trivia.film.service.KoreanFilmVO" />
+
+		<!-- publication -->
+		<typeAlias alias="publicationBoard" type="egovframework.ag.homepage.kofa.publication.service.PublicationBoardVO"/>
+		
+		<!-- promotiongallery -->
+		<typeAlias alias="promotionGallery" type="egovframework.ag.homepage.kofa.promotion.service.PromotionGalleryVO"/>
+
+		<!-- Survey -->
+		<typeAlias alias="surveyAnswer" type="egovframework.ag.homepage.common.survey.service.SurveyAnswerVO" />
+		<typeAlias alias="surveyDetail" type="egovframework.ag.homepage.common.survey.service.SurveyDetailVO" />
+		<typeAlias alias="surveyInfo" type="egovframework.ag.homepage.common.survey.service.SurveyInfoVO" />
+		<typeAlias alias="surveyQuestion" type="egovframework.ag.homepage.common.survey.service.SurveyQuestionVO" />
+		<typeAlias alias="surveyResult" type="egovframework.ag.homepage.common.survey.service.SurveyResultVO" />
+
+		<!-- Member -->
+		<typeAlias alias="memberInfo" type="egovframework.ag.homepage.member.member.service.MemberInfoVO"/>
+		<typeAlias alias="memberWithdrawal" type="egovframework.ag.homepage.member.member.service.MemberWithdrawalVO"/>
+		
+		<!-- Program -->
+		<typeAlias alias="programGroupInfo" type="egovframework.ag.homepage.program.group.service.ProgramGroupInfoVO"/>
+		<typeAlias alias="programInfo" type="egovframework.ag.homepage.program.group.service.ProgramInfoVO"/>
+		<typeAlias alias="programMovieInfo" type="egovframework.ag.homepage.program.movie.service.ProgramMovieInfoVO"/>
+		<typeAlias alias="kmdbMovieInfo" type="egovframework.ag.homepage.program.movie.service.KMDBMovieInfoVO"/>
+		<typeAlias alias="programCalendarInfo" type="egovframework.ag.homepage.program.calendar.service.ProgramCalendarInfoVO"/>
+		
+		<!-- exhibition -->
+		<typeAlias alias="exhibitionInfo" type="egovframework.ag.homepage.museum.exhibition.service.ExhibitionInfoVO"/>
+		<!-- education -->
+		<typeAlias alias="educationInfo" type="egovframework.ag.homepage.museum.education.service.EducationInfoVO"/>
+		<typeAlias alias="educationApplyInfo" type="egovframework.ag.homepage.museum.education.service.EducationApplyInfoVO"/>
+		
+		<!-- holiday -->
+		<typeAlias alias="holiday" type="egovframework.ag.homepage.common.holiday.service.HolidayManageVO" />
+		<typeAlias alias="operationTime" type="egovframework.ag.homepage.common.operationtime.service.OperationTimeVO" />
+		
+		<!-- board -->
+		<typeAlias alias="boardContent" type="egovframework.ag.homepage.common.board.service.BoardVO" />
+
+		<typeAlias alias="planRelMovieVo" type="egovframework.ag.homepage.content.service.PlanRelMovieVo"/>
+
+		<typeAlias alias="archivesFileVo" type="egovframework.ag.homepage.content.service.ArchivesFileVo"/>
+	    <!-- kofacollectionlist -->
+	    <typeAlias alias="kofacollectionlist" type="egovframework.ag.homepage.kofacollectionlist.service.KofaCollectionListVO" />
+	    
+	</typeAliases>
+	
+	<typeHandlers>
+	   <typeHandler handler="egovframework.ag.common.vo.DataTypeHandler" javaType="String" jdbcType="LONGVARCHAR"/>
+	   <typeHandler handler="egovframework.ag.common.vo.DataTypeHandler" javaType="String" jdbcType="CLOB"/>
+	</typeHandlers>
+</configuration>
