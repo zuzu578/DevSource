@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<!--  -->
+<mapper namespace="kofa.kofacollectionlist">
+
+	<resultMap id="kofacollectionlistResultMap" type="kofacollectionlist">
+		<id property="cCollectionId" column="C_COLLECTION_ID" />
+		<result property="cCollectionTitle" column="C_COLLECTION_TITLE" />
+		<result property="cCollectionKeyWord" column="C_COLLECTION_KEYWORD" />
+		<result property="cHighlightCd" column="C_HIGHLIGHT_CD" />
+		<result property="cCollectionOrder" column="C_COLLECTION_ORDER" />
+		<result property="cViewCnt" column="C_VIEW_CNT" />
+		<result property="cStatusCd" column="C_STATUS_CD" />
+		<result property="cRegisterId" column="C_REGISTER_ID" />
+		<result property="cRegistDateTime" column="C_REGIST_DATETIME" />
+		<result property="cUpdaterId" column="C_UPDATER_ID" />
+		<result property="cUpdateDateTime" column="C_UPDATE_TIME" />
+		<result property="useYn" column="USE_YN" />
+		<result property="cCollectionInfo" column="C_COLLECTION_INFO" />
+	
+		
+		<result property="cEnglishCollectionListTitle" column="C_ENGLISH_COLLECTIONLIST_TITLE" />
+		<result property="cCollectionListSubTitle" column="C_COLLECTIONLIST_SUB_TITLE" />
+		<result property="cEnglishCollectionSubTitle" column="C_ENGLISH_COLLECTION_SUB_TITLE" />
+		<result property="cCollectionKofaGroupId" column="C_COLLECTION_KOFA_GROUP_ID" />
+		<result property="cCollectionDesc" column="C_COLLECTION_DESC" />
+		<result property="cCollectionUseCondition" column="C_COLLECTION_USE_CONDITION" />
+		<result property="cCollectionKofaGroupTitle" column="C_COLLECTION_KOFA_GROUP_TITLE" />
+		<result property="cCollectionKofaGroupImg" column="C_COLLECTION_KOFA_GROUP_IMG" />
+		<result property="cCollectionKofaGroupDesc" column="C_COLLECTION_KOFA_GROUP_DESC" />
+		<result property="cCollectionKofaGroupOrder" column="C_COLLECTION_KOFA_GROUP_ORDER" />
+		<result property="cCollectionContent" column="C_COLLECTION_CONTENT" />
+		
+		<result property="cCollectionContent" column="C_COLLECTION_CONTENT" />
+		<result property="colName" column="COL_NAME" />
+		<result property="colRefUrl" column="COL_REF_URL" />
+		<result property="createId" column="CREATE_ID" />
+		<result property="createDate" column="CREATE_DATE" />
+		<result property="adjustId" column="ADJUST_ID" />
+		<result property="adjustDate" column="ADJUST_DATE" />
+		<result property="sort1" column="SORT1" />
+		<result property="sort2" column="SORT2" />
+		<result property="sort3" column="SORT3" />
+		<result property="sort4" column="SORT4" />
+		<result property="sort5" column="SORT5" />
+		
+		<result property="kmdbYn" column="KMDB_YN" />
+		<result property="colImage" column="COL_IMAGE" />
+		<result property="openDate" column="OPEN_DATE" />
+		<result property="lastUpdDate" column="LAST_UPD_DATE" />
+		<result property="subCategory" column="SUB_CATEGORY" />
+		
+
+		<result property="collectionFileNo" column="COLLECTION_FILE_NO" />
+		<result property="colId" column="COL_ID" />
+		<result property="fileNm" column="FILE_NM" />
+		<result property="fileClss" column="FILE_CLSS" />
+		<result property="createId" column="CREATE_ID" />
+		<result property="createDate" column="CREATE_DATE" />
+		<result property="adjustId" column="ADJUST_ID" />
+		<result property="adjustDate" column="ADJUST_DATE" />
+		
+		<result property="relId" column="REL_ID" />
+	
+		<result property="typeClss" column="TYPE_CLSS" />
+		<result property="dataId" column="DATA_ID" />
+		<result property="dataNo" column="DATA_NO" />
+		<result property="sort1" column="SORT1" />
+			<result property="sort2" column="SORT2" />
+				<result property="sort3" column="SORT3" />
+					<result property="sort4" column="SORT4" />
+						<result property="sort5" column="SORT5" />
+		<result property="category" column="CATEGORY" />
+		
+		<result property="description" column="DESCRIPTION" />
+		
+		<result property="remark" column="REMARK" />
+		<result property="createId" column="CREATE_ID" />
+		<result property="createDate" column="CREATE_DATE" />
+		<result property="adjustId" column="ADJUST_ID" />
+	
+		
+		<result property="upperColId" column="UPPER_COL_ID" />
+	
+		<result property="colNo" column="COL_NO" />
+		<result property="upperColNo" column="UPPER_COL_NO" />
+		<result property="colDepth" column="COL_DEPTH" />
+		<result property="createId" column="CREATE_ID" />
+		<result property="createDate" column="CREATE_DATE" />
+		<result property="adjustId" column="ADJUST_ID" />
+		<result property="adjustDate" column="ADJUST_DATE" />
+		<result property="subject" column="SUBJECT"/>
+		<result property="codeNm" column="CODE_NM"/>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</resultMap>
+	<select id="getCollectionDataInfo" resultMap="kofacollectionlistResultMap" parameterType="String">
+	   SELECT T2.* FROM (
+			SELECT ROWNUM ROWNO, T1.* 
+			FROM ( 
+			SELECT DISTINCT 
+	  t2.col_id AS col_id,
+      T2.DATA_ID AS dataId,
+      T1.SUBJECT AS subject,
+      T2.SORT1 AS sort1,
+      T2.SORT2 AS sort2,
+      T2.SORT3  AS sort3,
+      T2.SORT4  AS sort4,
+      T2.SORT5  AS sort5,
+      TA.CODE_NM  AS codeNm,
+      T2.CREATE_DATE AS createDate 
+     FROM kmdb.TB_ONLINE_ARCHIVES T1 INNER JOIN kmdb.KMDB_COLLECTIONS_REL T2 ON T1.ARCHIVES_SEQ = T2.DATA_ID
+     LEFT OUTER JOIN ( SELECT COL_ID, COL_NAME FROM kmdb.KMDB_COLLECTIONS) TB ON TB.COL_ID = T2.COL_ID
+	 INNER JOIN (SELECT CODE_NM ,CODE FROM kmdb.CODEINFO WHERE DIV_ID ='K05') TA ON TA.CODE = T2.TYPE_CLSS	
+	 	WHERE t2.COL_ID =#{colId,jdbcType=VARCHAR}
+		 ) T1
+          
+        ) T2
+	
+	</select>
+	<select id="getcCollectionKofaGroupTitle" resultMap="kofacollectionlistResultMap" parameterType="String">
+	
+	select
+          A.COL_NAME as cCollectionKofaGroupTitle
+        , TA.COL_NAME as colName
+    FROM kmdb.KMDB_COLLECTIONS A
+         INNER JOIN kmdb.KMDB_COLLECTIONS_UPPER B ON A.COL_ID = B.UPPER_COL_NO
+         LEFT OUTER JOIN (SELECT COL_ID, COL_NAME FROM kmdb.KMDB_COLLECTIONS) TA ON TA.COL_ID = B.COL_ID
+         WHERE B.COL_ID =#{colId,jdbcType=VARCHAR}
+	</select>
+
+	<select id="getDescription" resultMap="kofacollectionlistResultMap" parameterType="String">
+	
+	SELECT DESCRIPTION AS description FROM kmdb.KMDB_COLLECTIONS_REL WHERE COL_ID =#{colId,jdbcType=VARCHAR}
+	</select>
+	<select id="getrelationShipCollectionTitle" resultMap="kofacollectionlistResultMap" parameterType="String">
+	    
+select
+          A.COL_NAME as cCollectionKofaGroupTitle
+        , TA.COL_NAME as colName
+    FROM kmdb.KMDB_COLLECTIONS A
+         INNER JOIN kmdb.KMDB_COLLECTIONS_UPPER B ON A.COL_ID = B.UPPER_COL_NO
+         LEFT OUTER JOIN (SELECT COL_ID, COL_NAME FROM kmdb.KMDB_COLLECTIONS) TA ON TA.COL_ID = B.COL_ID
+         WHERE B.COL_ID =#{colId,jdbcType=VARCHAR}
+	
+	</select>
+	<select id="getcollectionsNames" resultMap="kofacollectionlistResultMap">
+	
+
+          SELECT s1.COL_NAME AS colName FROM kmdb.KMDB_COLLECTIONS s1 INNER JOIN kmdb.KMDB_COLLECTIONS_UPPER s2 ON s1.COL_ID  = s2.COL_ID 
+        WHERE s2.col_depth = 2
+        
+	</select>
+	<select id="getAllCollectionDataType" resultMap="kofacollectionlistResultMap">
+	 SELECT CODE_NM AS codeNm FROM KMDB.CODEINFO WHERE DIV_ID = 'K05'
+	
+	</select>
+	<select id="getkofaCollectionSortList" resultMap="kofacollectionlistResultMap" parameterType="java.util.HashMap">
+	   SELECT T2.* FROM (
+			SELECT ROWNUM ROWNO, T1.* 
+			FROM ( 
+				SELECT DISTINCT 
+      t2.col_id AS col_id,
+      T2.DATA_ID AS dataId,
+      TB.COL_NAME AS cCollectionKofaGroupTitle,
+      T1.SUBJECT AS subject,
+      T2.SORT1 AS sort1,
+      T2.SORT2 AS sort2,
+      T2.SORT3  AS sort3,
+      T2.SORT4  AS sort4,
+      T2.SORT5  AS sort5,
+      TA.CODE_NM  AS codeNm,
+      T2.CREATE_DATE AS createDate 
+     FROM kmdb.TB_ONLINE_ARCHIVES T1 INNER JOIN kmdb.KMDB_COLLECTIONS_REL T2 ON T1.ARCHIVES_SEQ = T2.DATA_ID
+     LEFT OUTER JOIN ( SELECT COL_ID, COL_NAME FROM kmdb.KMDB_COLLECTIONS) TB ON TB.COL_ID = T2.COL_ID
+	 INNER JOIN (SELECT CODE_NM ,CODE FROM kmdb.CODEINFO WHERE DIV_ID ='K05') TA ON TA.CODE = T2.TYPE_CLSS	
+	  WHERE 1 = 1
+	  <if test='keyword != null and keyword != ""'>
+			AND UPPER(TB.COL_NAME) LIKE '%' || UPPER(#{keyword,jdbcType=VARCHAR}) || '%'
+		</if>
+		<if test='dataTitle != null and dataTitle !=""'>
+			 AND TA.CODE_NM = #{dataTitle}
+		
+		</if>
+		<if test='kofaCollectionTitle != null and kofaCollectionTitle !=""'>
+			 AND tb.COL_NAME = #{kofaCollectionTitle}
+		
+		</if>
+		) T1
+          WHERE ROWNUM &lt;= #{fetchSize}
+        ) T2
+      WHERE ROWNO &gt;= #{startRow}
+	
+	
+	 </select>
+	<select id="getkofaCollectionSortListCount" resultType="int" parameterType="java.util.HashMap">
+	        SELECT COUNT(*)  FROM (
+			SELECT ROWNUM ROWNO, T1.* 
+			FROM ( 
+				SELECT DISTINCT 
+      t2.col_id AS col_id,
+      T2.DATA_ID AS dataId,
+      TB.COL_NAME AS cCollectionKofaGroupTitle,
+      T1.SUBJECT AS subject,
+      T2.SORT1 AS sort1,
+      T2.SORT2 AS sort2,
+      T2.SORT3  AS sort3,
+      T2.SORT4  AS sort4,
+      T2.SORT5  AS sort5,
+      TA.CODE_NM  AS codeNm,
+      T2.CREATE_DATE AS createDate 
+     FROM kmdb.TB_ONLINE_ARCHIVES T1 INNER JOIN kmdb.KMDB_COLLECTIONS_REL T2 ON T1.ARCHIVES_SEQ = T2.DATA_ID
+     LEFT OUTER JOIN ( SELECT COL_ID, COL_NAME FROM kmdb.KMDB_COLLECTIONS) TB ON TB.COL_ID = T2.COL_ID
+	 INNER JOIN (SELECT CODE_NM ,CODE FROM kmdb.CODEINFO WHERE DIV_ID ='K05') TA ON TA.CODE = T2.TYPE_CLSS	
+	  WHERE 1 = 1
+	 	  <if test='keyword != null and keyword != ""'>
+			AND UPPER(TB.COL_NAME) LIKE '%' || UPPER(#{keyword,jdbcType=VARCHAR}) || '%'
+		</if>	
+		<if test='dataTitle != null and dataTitle !=""'>
+			 AND TA.CODE_NM = #{dataTitle}
+		
+		</if>
+		<if test='kofaCollectionTitle != null and kofaCollectionTitle !=""'>
+			 AND tb.COL_NAME = #{kofaCollectionTitle}
+		
+		</if>
+		 ) T1
+          
+        ) T2
+ 
+	
+	</select>
+
+	<select id="getCollectionListInfoContent" parameterType="String" resultMap="kofacollectionlistResultMap">
+	SELECT C_COLLECTION_INFO 
+	
+	   FROM TB_COLLECTION_INFO
+	    WHERE C_COLLECTION_ID = #{collectionListId,jdbcType=VARCHAR}
+	
+	</select>
+	<select id="getCollectionListInfoContent2" parameterType="String" resultMap="kofacollectionlistResultMap">
+	SELECT C_COLLECTION_DESC 
+	
+	   FROM TB_COLLECTION_INFO
+	    WHERE C_COLLECTION_ID = #{collectionListId,jdbcType=VARCHAR}
+	
+	</select>
+	
+	<select id="getCollectionListInfoContent3" parameterType="String" resultMap="kofacollectionlistResultMap">
+	SELECT C_COLLECTION_USE_CONDITION 
+	
+	   FROM TB_COLLECTION_INFO
+	    WHERE C_COLLECTION_ID = #{collectionListId,jdbcType=VARCHAR}
+	
+	</select>
+	<update id="doUpdate"  parameterType="java.util.HashMap">
+	
+		UPDATE TB_COLLECTION_INFO
+		SET 
+		C_COLLECTION_INFO = #{cCollectionInfo,jdbcType=VARCHAR},
+		C_COLLECTION_DESC = #{cCollectionDesc,jdbcType=VARCHAR},
+		C_COLLECTION_USE_CONDITION =  #{cCollectionUseCondition,jdbcType=VARCHAR}
+		WHERE C_COLLECTION_ID = #{cCollectionId,jdbcType=VARCHAR}
+	
+	</update>
+	<select id="getuseYnFlag" resultMap="kofacollectionlistResultMap">
+	
+	    SELECT distinct  USE_YN FROM TB_COLLECTION_INFO
+	</select>
+	<select id="getAllKofaCollectionGroup" resultMap="kofacollectionlistResultMap">
+	SELECT DISTINCT 
+
+KS.COL_NAME
+
+
+FROM kmdb.KMDB_COLLECTIONS KS
+
+
+LEFT OUTER JOIN kmdb.KMDB_COLLECTIONS_UPPER kcu ON KS.COL_ID = kcu.UPPER_COL_NO
+
+WHERE kcu.COL_DEPTH = '1'
+	
+	</select>
+	
+	 
+	
+	<select id="getCollectionListInfo" resultMap="kofacollectionlistResultMap" parameterType="string">
+		   SELECT T2.* FROM (
+			SELECT ROWNUM ROWNO, T1.* 
+			
+			FROM ( SELECT
+		TA.COL_id,
+          A.COL_NAME as cCollectionTitle
+        , TA.COL_NAME as cCollection
+        ,A.ADJUST_DATE
+        
+    FROM KMDB.KMDB_COLLECTIONS A
+         INNER JOIN KMDB.KMDB_COLLECTIONS_UPPER B ON A.COL_ID = B.UPPER_COL_NO
+         LEFT OUTER JOIN (SELECT COL_ID, COL_NAME FROM KMDB.KMDB_COLLECTIONS) TA ON TA.COL_ID = B.COL_ID
+        
+        WHERE 1=1
+        AND TA.COL_ID = #{collectionListId,jdbcType=VARCHAR}
+		   
+		   
+		) T1
+          
+        ) T2
+		
+	</select>
+	
+	<select id="getKofaCollectionPagingList" resultMap="kofacollectionlistResultMap" parameterType="java.util.HashMap">
+		SELECT T2.* FROM (
+			SELECT ROWNUM ROWNO, T1.* 
+			
+			FROM ( SELECT
+		TA.COL_id,
+          A.COL_NAME as cCollectionTitle
+        , TA.COL_NAME as cCollection
+        ,A.ADJUST_DATE
+        
+    FROM KMDB.KMDB_COLLECTIONS A
+         INNER JOIN KMDB.KMDB_COLLECTIONS_UPPER B ON A.COL_ID = B.UPPER_COL_NO
+         LEFT OUTER JOIN (SELECT COL_ID, COL_NAME FROM KMDB.KMDB_COLLECTIONS) TA ON TA.COL_ID = B.COL_ID
+        
+        WHERE 1=1
+		  <if test='KofaGroupTitle != null and KofaGroupTitle != ""'>
+			AND UPPER(A.COL_NAME) LIKE '%' || #{KofaGroupTitle,jdbcType=VARCHAR} || '%'
+		</if>
+		  <if test='KofaGroupTit != null and KofaGroupTit != ""'>
+			
+			 	AND TA.COL_NAME LIKE '%' || #{KofaGroupTit,jdbcType=VARCHAR} || '%'
+		</if>
+		) T1
+          WHERE ROWNUM &lt;= #{fetchSize}
+        ) T2
+      WHERE ROWNO &gt;= #{startRow}
+	
+	 </select>
+	 <select id="kofaCollectionListCount" resultType="int" parameterType="java.util.HashMap">
+			SELECT COUNT(*)  FROM (
+			
+			SELECT
+		TA.COL_id,
+          A.COL_NAME as cCollectionTitle
+        , TA.COL_NAME as cCollection
+        ,A.ADJUST_DATE
+        
+    FROM KMDB.KMDB_COLLECTIONS A
+         INNER JOIN KMDB.KMDB_COLLECTIONS_UPPER B ON A.COL_ID = B.UPPER_COL_NO
+         LEFT OUTER JOIN (SELECT COL_ID, COL_NAME FROM KMDB.KMDB_COLLECTIONS) TA ON TA.COL_ID = B.COL_ID
+        
+         WHERE 1=1
+		  <if test='KofaGroupTitle != null and KofaGroupTitle != ""'>
+			AND UPPER(A.COL_NAME) LIKE '%' || UPPER(#{KofaGroupTitle,jdbcType=VARCHAR}) || '%'
+		</if>
+		  <if test='KofaGroupTit != null and KofaGroupTit != ""'>
+			AND TA.COL_NAME LIKE '%' || #{KofaGroupTit,jdbcType=VARCHAR} || '%'
+		</if>
+	
+
+	 	    	
+	 	    	)
+		 
+	</select>
+</mapper>

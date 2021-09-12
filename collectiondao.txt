@@ -1,0 +1,17 @@
+package egovframework.ag.hompage.kofacollectionlist.web.service;
+
+import java.util.Map;
+
+import egovframework.ag.common.annotation.KMDBMapper;
+
+@KMDBMapper
+public interface CollectionDao {
+	/**
+	 * 해당 게시물의 colId 로 정렬 기준 (sort ) 조회 
+	 * @param nation (colId)
+	 * @return
+	 * @throws Exception
+	 */
+	Map<String, Object> selectSorts(String colId) throws Exception;
+
+}

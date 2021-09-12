@@ -1,0 +1,19 @@
+package egovframework.ag.hompage.kofacollectionlist.web.service;
+
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+
+@Service
+public class CollectionService {
+	@Autowired
+	private CollectionDao collectionDao;
+
+	public Map<String, Object> selectSorts(String colId) throws Exception {
+		// TODO Auto-generated method stub
+		return collectionDao.selectSorts(colId);
+	}
+
+}
