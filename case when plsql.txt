@@ -1,0 +1,125 @@
+SELECT DISTINCT
+        DATA_ID,
+        TYPE_CLSS,
+       
+        CASE WHEN TYPE_CLSS = 'TH' THEN
+                (SELECT DISTINCT
+                    THEORY_NM FROM kmdb.KMDB_COLLECTIONS_REL
+                        LEFT OUTER JOIN (SELECT THEORY_DETAIL_ID, THEORY_NM FROM kmdb.THEORY_DETAIL, Kmdb.THEORY, kmdb.KMDB_COLLECTIONS_REL
+                        WHERE kmdb.THEORY_DETAIL.THEORY_ID=kmdb.THEORY.THEORY_ID) TA
+                        ON TO_CHAR(TA.THEORY_DETAIL_ID)= kmdb.KMDB_COLLECTIONS_REL.DATA_ID
+                WHERE TYPE_CLSS = 'TH')
+              
+            WHEN TYPE_CLSS = 'VI' THEN
+                (SELECT DISTINCT
+                    TITLES FROM kmdb.KMDB_COLLECTIONS_REL
+          
+                        LEFT OUTER JOIN (SELECT VIDEO_DETAIL_ID, TITLES FROM kmdb.VIDEO_DETAIL, Kmdb.VIDEO, kmdb.KMDB_COLLECTIONS_REL WHERE kmdb.VIDEO_DETAIL.VIDEO_ID=kmdb.VIDEO.VIDEO_ID) TA ON TO_CHAR(TA.VIDEO_DETAIL_ID)= kmdb.KMDB_COLLECTIONS_REL.DATA_ID
+                WHERE TYPE_CLSS = 'VI')
+              
+            WHEN TYPE_CLSS = 'VO' THEN
+                (SELECT DISTINCT
+                    PUB_TITLE FROM kmdb.KMDB_COLLECTIONS_REL
+       
+                        LEFT OUTER JOIN (SELECT PUB_ID, PUB_TITLE FROM kmdb.PUBLICATION, kmdb.KMDB_COLLECTIONS_REL) TA ON TO_CHAR(TA.PUB_ID)= kmdb.KMDB_COLLECTIONS_REL.DATA_ID
+               
+                WHERE TYPE_CLSS = 'VO')
+       
+--중복값      
+--          WHEN TYPE_CLSS  = 'ST' THEN
+--                (SELECT
+--                    STILL_NM FROM kmdb.KMDB_COLLECTIONS_REL
+--                   
+--                        LEFT OUTER JOIN (SELECT STILL_DETAIL_ID, STILL_NM FROM kmdb.STILL_DETAIL, KMDB.STILL ,kmdb.KMDB_COLLECTIONS_REL
+--                        WHERE kmdb.STILL_DETAIL.STILL_ID=kmdb.STILL.STILL_ID) TA
+--                        ON TO_CHAR(TA.STILL_DETAIL_ID) = kmdb.KMDB_COLLECTIONS_REL.DATA_ID
+--                WHERE TYPE_CLSS = 'ST')
+                
+             WHEN TYPE_CLSS  = 'SF' THEN 
+ 		 		  (SELECT DISTINCT
+				   STILFM_NM AS DATA_NM
+         			FROM kmdb.KMDB_COLLECTIONS_REL
+                   LEFT OUTER JOIN (SELECT STILLFILM_ID, STILFM_NM FROM kmdb.STILL_FILM, kmdb.KMDB_COLLECTIONS_REL) TA
+               	 ON TO_CHAR(TA.STILLFILM_ID)= kmdb.KMDB_COLLECTIONS_REL.DATA_ID
+               	WHERE TYPE_CLSS = 'SF' )
+               	
+            WHEN TYPE_CLSS  = 'SC' THEN 
+ 				  (SELECT DISTINCT
+         		   S_TITLE AS DATA_NM
+         		   FROM kmdb.KMDB_COLLECTIONS_REL
+                   LEFT OUTER JOIN (SELECT SCENARIO_ID, S_TITLE FROM kmdb.SCENARIO, kmdb.KMDB_COLLECTIONS_REL) TA
+               	   ON TO_CHAR(TA.SCENARIO_ID)= kmdb.KMDB_COLLECTIONS_REL.DATA_ID
+               	   	WHERE TYPE_CLSS = 'SC') 
+               	   	
+           WHEN TYPE_CLSS  = 'RE' THEN 
+ 		        (SELECT DISTINCT
+         		TITLE AS DATA_NM
+         		FROM kmdb.KMDB_COLLECTIONS_REL
+                LEFT OUTER JOIN (SELECT RECORD_ID, TITLE FROM kmdb.RECORD, kmdb.KMDB_COLLECTIONS_REL) TA
+               	 ON TO_CHAR(TA.RECORD_ID)= kmdb.KMDB_COLLECTIONS_REL.DATA_ID
+               	 WHERE TYPE_CLSS ='RE')  
+               	 
+           WHEN TYPE_CLSS  = 'PO' THEN 
+ 		 		(SELECT DISTINCT
+         		 POST_NAME AS DATA_NM
+                 FROM kmdb.KMDB_COLLECTIONS_REL
+                 LEFT OUTER JOIN (SELECT POSTER_ID, POST_NAME FROM kmdb.POSTER, kmdb.KMDB_COLLECTIONS_REL) TA
+               	 ON TO_CHAR(TA.POSTER_ID)= kmdb.KMDB_COLLECTIONS_REL.DATA_ID     
+               	 WHERE TYPE_CLSS ='PO')
+               	 
+           WHEN  TYPE_CLSS  = 'NE' THEN 
+ 				(SELECT DISTINCT
+        		NEWS_NM AS DATA_NM
+        		FROM kmdb.KMDB_COLLECTIONS_REL
+                LEFT OUTER JOIN (SELECT NEWS_ID, NEWS_NM FROM kmdb.NEWS, kmdb.KMDB_COLLECTIONS_REL) TA
+               	ON TO_CHAR(TA.NEWS_ID)= kmdb.KMDB_COLLECTIONS_REL.DATA_ID
+               	WHERE TYPE_CLSS  ='NE')
+               	
+            WHEN TYPE_CLSS  = 'MU' THEN 
+		 			(SELECT DISTINCT
+		     		MUL_TITLE AS DATA_NM
+		         	FROM kmdb.KMDB_COLLECTIONS_REL
+                    LEFT OUTER JOIN (SELECT MUL_ID, MUL_TITLE FROM kmdb.MULTI_NEW, kmdb.KMDB_COLLECTIONS_REL) TA
+               		ON TO_CHAR(TA.MUL_ID)= kmdb.KMDB_COLLECTIONS_REL.DATA_ID
+               		WHERE TYPE_CLSS ='MU')
+               		
+            WHEN TYPE_CLSS  = 'HA' THEN 
+						 (SELECT DISTINCT
+      					  HANDBL_NM AS DATA_NM
+        				  FROM kmdb.KMDB_COLLECTIONS_REL
+                 		  LEFT OUTER JOIN (SELECT HANDBILL_DETAIL_ID, HANDBL_NM FROM kmdb.HANDBILL_DETAIL, KMDB.HANDBILL ,kmdb.KMDB_COLLECTIONS_REL
+                  		  WHERE kmdb.HANDBILL_DETAIL.HANDBILL_DETAIL_ID=kmdb.HANDBILL.HANDBILL_ID) TA
+                  		  ON TO_CHAR(TA.HANDBILL_DETAIL_ID) = kmdb.KMDB_COLLECTIONS_REL.DATA_ID
+                  		  WHERE TYPE_CLSS ='HA')
+                  		  
+            WHEN TYPE_CLSS  = 'CE' THEN 
+ 						  (SELECT DISTINCT
+ 						   TITLE AS DATA_NM
+         				   FROM kmdb.KMDB_COLLECTIONS_REL
+                 		   LEFT OUTER JOIN (SELECT CENSOR_DETAIL_ID, TITLE FROM kmdb.CENSORSHIP_DETAIL, KMDB.CENSORSHIP_ALL ,kmdb.KMDB_COLLECTIONS_REL
+                  		   WHERE kmdb.CENSORSHIP_DETAIL.CENSOR_DETAIL_ID=kmdb.CENSORSHIP_ALL.CENSOR_ALL_ID) TA
+                           ON TO_CHAR(TA.CENSOR_DETAIL_ID) = kmdb.KMDB_COLLECTIONS_REL.DATA_ID
+                           WHERE TYPE_CLSS ='CE')
+                           
+            WHEN TYPE_CLSS   = 'BO' THEN 
+ 						(SELECT DISTINCT
+        			     BOOK_NM AS DATA_NM
+         				 FROM kmdb.KMDB_COLLECTIONS_REL
+                   		 LEFT OUTER JOIN (SELECT BOOK_DETAIL_ID, BOOK_NM FROM kmdb.BOOK_DETAIL, KMDB.BOOK ,kmdb.KMDB_COLLECTIONS_REL
+                  		 WHERE kmdb.BOOK_DETAIL.BOOK_DETAIL_ID=kmdb.BOOK.BOOK_ID) TA
+                  		 ON TO_CHAR(TA.BOOK_DETAIL_ID) = kmdb.KMDB_COLLECTIONS_REL.DATA_ID
+                  		 WHERE TYPE_CLSS ='BO')
+                  		 
+            WHEN TYPE_CLSS   = 'AT' THEN 
+ 				     (SELECT DISTINCT
+					  C_TITLE AS DATA_NM
+         			  FROM kmdb.KMDB_COLLECTIONS_REL
+                   	  LEFT OUTER JOIN (SELECT ARTICLE_ID, C_TITLE FROM kmdb.ARTICLE, kmdb.KMDB_COLLECTIONS_REL) TA
+               	 	  ON TO_CHAR(TA.ARTICLE_ID)= kmdb.KMDB_COLLECTIONS_REL.DATA_ID
+               	 	  WHERE TYPE_CLSS ='AT')
+               	 	  
+               	                       
+                          	 
+            ELSE '' END AS DATA_NM
+
+    FROM kmdb.KMDB_COLLECTIONS_REL;
